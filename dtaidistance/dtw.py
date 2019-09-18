@@ -26,7 +26,7 @@ except ImportError:
     dtw_c = None
 
 try:
-    from tqdm import tqdm
+    from tqdm import tqdm_notebook as tqdm
 except ImportError:
     logger.info('tqdm library not available')
     tqdm = None
@@ -119,7 +119,7 @@ def distance(s1, s2, window=None, max_dist=None,
     i0 = 1
     i1 = 0
     psi_shortest = np.inf
-    for i in range(r):
+    for i in tqdm(range(r)):
         # print("i={}".format(i))
         # print(dtw)
         if last_under_max_dist == -1:
@@ -139,7 +139,9 @@ def distance(s1, s2, window=None, max_dist=None,
         if psi != 0 and j_start == 0 and i < psi:
             dtw[i1, 0] = 0
         for j in range(j_start, j_end):
-            d = (s1[i] - s2[j])**2
+            from sklearn.metrics.pairwise import cosine_similarity
+            d = cosine_similarity([s1[i]],[s2[j]])[0][0]
+            #d = (s1[i] - s2[j])**2
             if d > max_step:
                 continue
             assert j + 1 - skip >= 0
@@ -261,7 +263,7 @@ def warping_paths(s1, s2, window=None, max_dist=None,
     last_under_max_dist = 0
     i0 = 1
     i1 = 0
-    for i in range(r):
+    for i in tqdm(range(r)):
         if last_under_max_dist == -1:
             prev_last_under_max_dist = np.inf
         else:
@@ -280,7 +282,9 @@ def warping_paths(s1, s2, window=None, max_dist=None,
         #                                                y)
         for j in range(max(0, i - max(0, r - c) - window + 1), min(c, i + max(0, c - r) + window)):
             # print('j =', j, 'max=',min(c, c - r + i + window))
-            d = (s1[i] - s2[j])**2
+            from sklearn.metrics.pairwise import cosine_similarity
+            d = cosine_similarity([s1[i]],[s2[j]])[0][0]
+            #d = (s1[i] - s2[j])**2
             if max_step is not None and d > max_step:
                 continue
             # print(i, j + 1 - skip, j - skipp, j + 1 - skipp, j - skip)
