@@ -140,7 +140,8 @@ def distance(s1, s2, window=None, max_dist=None,
             dtw[i1, 0] = 0
         for j in range(j_start, j_end):
             from sklearn.metrics.pairwise import cosine_similarity
-            d = cosine_similarity([s1[i]],[s2[j]])[0][0]
+            from math import acos
+            d = acos(cosine_similarity([s1[i]],[s2[j]])[0][0])
             #d = (s1[i] - s2[j])**2
             if d > max_step:
                 continue
@@ -283,7 +284,8 @@ def warping_paths(s1, s2, window=None, max_dist=None,
         for j in range(max(0, i - max(0, r - c) - window + 1), min(c, i + max(0, c - r) + window)):
             # print('j =', j, 'max=',min(c, c - r + i + window))
             from sklearn.metrics.pairwise import cosine_similarity
-            d = cosine_similarity([s1[i]],[s2[j]])[0][0]
+            from math import acos
+            d = acos(cosine_similarity([s1[i]],[s2[j]])[0][0])
             #d = (s1[i] - s2[j])**2
             if max_step is not None and d > max_step:
                 continue
