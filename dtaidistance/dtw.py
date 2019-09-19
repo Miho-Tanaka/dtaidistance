@@ -141,7 +141,7 @@ def distance(s1, s2, window=None, max_dist=None,
         for j in range(j_start, j_end):
             from sklearn.metrics.pairwise import cosine_similarity
             from math import acos
-            d = acos(cosine_similarity([s1[i]],[s2[j]])[0][0])
+            d = min(1,max(-1,acos(cosine_similarity([s1[i]],[s2[j]])[0][0])))
             #d = (s1[i] - s2[j])**2
             if d > max_step:
                 continue
