@@ -285,7 +285,7 @@ def warping_paths(s1, s2, window=None, max_dist=None,
             # print('j =', j, 'max=',min(c, c - r + i + window))
             from sklearn.metrics.pairwise import cosine_similarity
             from math import acos
-            d = acos(cosine_similarity([s1[i]],[s2[j]])[0][0])
+            d = min(1,max(-1,acos(cosine_similarity([s1[i]],[s2[j]])[0][0])))
             #d = (s1[i] - s2[j])**2
             if max_step is not None and d > max_step:
                 continue
