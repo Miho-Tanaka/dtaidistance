@@ -25,11 +25,11 @@ except ImportError:
     # logger.info('C library not available')
     dtw_c = None
 
-try:
-    from tqdm import tqdm_notebook as tqdm
-except ImportError:
-    logger.info('tqdm library not available')
-    tqdm = None
+#try:
+#    from tqdm import tqdm_notebook as tqdm
+#except ImportError:
+#    logger.info('tqdm library not available')
+#    tqdm = None
 
 DTYPE = np.double
 
@@ -119,7 +119,7 @@ def distance(s1, s2, window=None, max_dist=None,
     i0 = 1
     i1 = 0
     psi_shortest = np.inf
-    for i in tqdm(range(r)):
+    for i in range(r):
         # print("i={}".format(i))
         # print(dtw)
         if last_under_max_dist == -1:
@@ -264,7 +264,7 @@ def warping_paths(s1, s2, window=None, max_dist=None,
     last_under_max_dist = 0
     i0 = 1
     i1 = 0
-    for i in tqdm(range(r)):
+    for i in range(r):
         if last_under_max_dist == -1:
             prev_last_under_max_dist = np.inf
         else:
@@ -494,7 +494,7 @@ def distance_matrix_python(s, block=None, show_progress=False, max_length_diff=N
     else:
         it_r = range(block[0][0], block[0][1])
     if show_progress:
-        it_r = tqdm(it_r)
+        it_r = it_r
     idx = 0
     for r in it_r:
         if block is None:
